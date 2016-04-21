@@ -36,7 +36,7 @@ sub report_problems
         my $problems = {};
         if($mod_owner ne $owner)
         {
-            $problems->{different_owner} = $owner;
+            $problems->{different_owner} = $mod_owner;
         }
         my $lc = List::Compare->new(\@comaint, \@mc);
         unless($lc->is_LequivalentR)
@@ -48,7 +48,7 @@ sub report_problems
         }
         if(%$problems)
         {
-            push @problem_list, { module => $problems };
+            push @problem_list, { module => $module, issues => $problems };
         }
     }
 

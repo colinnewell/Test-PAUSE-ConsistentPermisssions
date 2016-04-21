@@ -2,11 +2,30 @@ use Test::Most;
 use Test::PAUSE::ConsistentPermissions;
 use Test::MockObject;
 my $mock = Test::MockObject->new();
+my @co_maint = qw/TEST1 TEST2/;
 my $mp = Test::MockObject->new();
 $mp->set_always('owner', 'NEWELLC');
-my @co_maint = qw/TEST1 TEST2/;
 $mp->set_list('co_maintainers', @co_maint);
+my $different_owner = Test::MockObject->new();
+$different_owner->set_always('owner', 'WRONG');
+$different_owner->set_list('co_maintainers', qw/TEST1 TEST2/);
 $mock->set_always('module_permissions', $mp);
+my $different_comaint = Test::MockObject->new();
+$different_comaint->set_always('owner', 'NEWELLC');
+$different_comaint->set_always('co_maintainers', qw/TEST/);
+my @responses;
+push @responses, $mp;
+push @responses, $mp;
+push @responses, $different_comaint;
+push @responses, $different_owner;
+$mock->mock('module_permissions', sub {
+    if(@responses)
+    {
+        my $response = shift @responses;
+        return $response;
+    }
+    return $mp; # otherwise default to this.
+});
 
 my $perms_test = Test::PAUSE::ConsistentPermissions->new({ permissions_client => $mock });
 my $problems = $perms_test->report_problems([qw/
@@ -70,7 +89,25 @@ eq_or_diff $problems, {
     comaint => \@co_maint,
     module => 'OpusVL::AppKit',
     owner => 'NEWELLC',
-    problems => [],
+    problems => [
+        {
+            module => 'OpusVL::AppKit::Action::AppKitForm',
+            issues => {
+                missing => [
+                    'TEST1', 'TEST2',
+                ],
+                extra => [
+                    'TEST',
+                ],
+            },
+        },
+        {
+            module => 'OpusVL::AppKit::Builder',
+            issues => {
+                different_owner => 'WRONG',
+            },
+        },
+    ],
 }, 'OpusVL::AppKit should have no inconsistent permissions';
 
 done_testing;
