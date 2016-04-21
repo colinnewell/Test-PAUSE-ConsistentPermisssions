@@ -3,7 +3,6 @@ package Test::PAUSE::ConsistentPermissions::Check;
 use strictures 2;
 
 use Moo;
-use Parse::LocalDistribution;
 use PAUSE::Permissions;
 use List::Compare;
 
@@ -59,17 +58,6 @@ sub report_problems
         problems => \@problem_list,
     };
 }
-
-# FIXME: provide a method that will check the current module
-# using Parse::LocalDistribution
-# sub get_current_dist_modules
-# {
-#     my $self = shift;
-#     my $provides = Parse::LocalDistribution->new->parse();
-# 
-#     return $provides;
-# }
-
 
 # achieve: 
 # report incorrect owner.  
