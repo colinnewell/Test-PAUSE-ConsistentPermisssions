@@ -108,6 +108,6 @@ eq_or_diff $problems, {
             },
         },
     ],
-}, 'OpusVL::AppKit should have no inconsistent permissions';
+}, 'OpusVL::AppKit should have a few inconsistent permissions';
 
 done_testing;
