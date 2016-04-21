@@ -76,3 +76,27 @@ sub report_problems
 # report missing comaint.
 
 1;
+
+=head1 NAME
+
+Test::PAUSE::ConsistentPermissions - Check your PAUSE permissions are consistent in your distribution.
+
+=head1 DESCRIPTION
+
+=head1 METHODS
+
+=head2 report_problems
+
+=head1 ATTRIBUTES
+
+=head2 permissions_client
+
+This is the L<PAUSE::Permissions> object used to check the PAUSE permissions.
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright 2015 OpusVL.
+
+This software is licensed according to the "IP Assignment Schedule" provided with the development project.
+
+=cut
