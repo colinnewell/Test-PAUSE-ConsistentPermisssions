@@ -61,11 +61,14 @@ Note that this is different to checking that the current author has permission t
 
     done_testing;
 
+These test will only run if the RELEASE_TESTING environment variable is set, otherwise they will
+skip.
 
 =head1 FUNCTIONS
 
 =head2 all_permissions_consistent
 
+This needs to be passed the core module name.
 
 =head1 SEE ALSO
 
