@@ -22,6 +22,7 @@ sub all_permissions_consistent
     my $results = $checker->report_problems([keys %$provides], $authority_with);
     if(@{$results->{problems}})
     {
+        # FIXME: lets be more expressive.
         fail "There were problems";
     }
     else
