@@ -55,10 +55,16 @@ Note that this is different to checking that the current author has permission t
 
 =head1 FUNCTIONS
 
+=head2 all_permissions_consistent
+
 
 =head1 SEE ALSO
 
 =over 
+
+=item * App::PAUSE::CheckPerms
+
+An application to check if an authors permissions are consistent.
 
 =item * Test::PAUSE::Permissions
 
