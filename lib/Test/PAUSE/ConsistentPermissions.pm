@@ -12,6 +12,8 @@ sub all_permissions_consistent
 {
     my $authority_with = shift;
 
+    # FIXME: figure out default to use for Authority.
+
     # FIXME: is RELEASE_TESTING the appropriate time for this??
     plan skip_all => 'Set RELEASE_TESTING environmental variable to test this.' unless $ENV{RELEASE_TESTING};
 
@@ -34,7 +36,24 @@ Test::PAUSE::ConsistentPermissions - Check your PAUSE permissions are consistent
 
 =head1 DESCRIPTION
 
-=head1 METHODS
+This module is designed to check the permissions of this distribution and ensure that they
+are consistent.  This checks that for all the modules in the distribution the owner and comaintainer
+are the same.
+
+To perform your own checks in some way other than a simple test look at the 
+L<Test::PAUSE::ConsistentPermissions::Check> module.
+
+Note that this is different to checking that the current author has permission to upload this module.
+
+    use Test::More;
+    use Test::PAUSE::ConsistentPermissions;
+
+    all_permissions_consistent 'Test::PAUSE::ConsistentPermissions';
+
+    done_testing;
+
+
+=head1 FUNCTIONS
 
 
 =head1 SEE ALSO
@@ -42,6 +61,9 @@ Test::PAUSE::ConsistentPermissions - Check your PAUSE permissions are consistent
 =over 
 
 =item * Test::PAUSE::Permissions
+
+This module allows you to ensure that you will be able to upload your module
+succesfully.
 
 The test part of this module is heavily based on that module.
 
