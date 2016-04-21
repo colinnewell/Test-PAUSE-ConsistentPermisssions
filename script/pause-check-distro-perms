@@ -1,0 +1,31 @@
+#!perl
+
+use strictures 2;
+use PAUSE::Packages;
+use Test::PAUSE::ConsistentPermissions::Check;
+
+my $dist = shift;
+my $module = shift;
+
+# FIXME: use proper command line parsing.
+# then we can have verbose/quiet etc.
+
+unless($dist && $module)
+{
+    print STDERR "Usage $0 dist-name module::name\n";
+    print STDERR "\n";
+    print STDERR "This checks the permissions are consistent for dist-name\n";
+    print STDERR "Using module::name as the module with the correct set of permissions\n";
+    print STDERR "Note this downloads a couple of large files from cpan so it may be slow.\n";
+    exit(1);
+}
+
+my $pp = PAUSE::Packages->new;
+my $perms_test = Test::PAUSE::ConsistentPermissions::Check->new;
+
+my $release_info = $pp->release($dist);
+my @modules = map { $_->name } @{$release_info->modules};
+my $report = $perms_test->report_problems(\@modules, $module);
+
+use Data::Dumper;
+print Dumper($report);
