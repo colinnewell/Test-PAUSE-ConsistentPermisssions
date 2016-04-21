@@ -20,10 +20,18 @@ sub all_permissions_consistent
     my $provides = Parse::LocalDistribution->new->parse();
     my $checker = Test::PAUSE::ConsistentPermissions::Check->new();
     my $results = $checker->report_problems([keys %$provides], $authority_with);
+    my $notes = '';
+    open my $nh, '>', \$notes;
+    $checker->module_info_to_fh($results, $nh);
+    close($nh);
+    note($notes);
     if(@{$results->{problems}})
     {
-        # FIXME: lets be more expressive.
-        fail "There were problems";
+        my $problems = '';
+        open my $ph, '>', \$problems;
+        $checker->problems_to_fh($results, $ph);
+        close($ph);
+        fail $problems;
     }
     else
     {
