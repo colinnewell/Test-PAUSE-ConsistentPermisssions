@@ -1,4 +1,10 @@
+requires 'List::Compare';
+requires 'Moo';
+requires 'Parse::LocalDistribution';
 requires 'PAUSE::Permissions';
 requires 'strictures' => '2';
-requires 'Parse::LocalDistribution';
-requires 'Moo';
+
+on 'test' => sub {
+    requires 'Test::Most';
+    requires 'Test::MockObject';
+};
