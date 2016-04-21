@@ -1,5 +1,5 @@
 use Test::Most;
-use Test::PAUSE::ConsistentPermissions;
+use Test::PAUSE::ConsistentPermissions::Check;
 use Test::MockObject;
 my $mock = Test::MockObject->new();
 my @co_maint = qw/TEST1 TEST2/;
@@ -27,7 +27,7 @@ $mock->mock('module_permissions', sub {
     return $mp; # otherwise default to this.
 });
 
-my $perms_test = Test::PAUSE::ConsistentPermissions->new({ permissions_client => $mock });
+my $perms_test = Test::PAUSE::ConsistentPermissions::Check->new({ permissions_client => $mock });
 my $problems = $perms_test->report_problems([qw/
 OpusVL::AppKit
 OpusVL::AppKit::Action::AppKitForm
