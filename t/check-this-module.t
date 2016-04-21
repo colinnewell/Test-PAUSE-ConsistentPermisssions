@@ -66,6 +66,11 @@ OpusVL::AppKit::View::JSON
 OpusVL::AppKit::View::PDF::Reuse
 OpusVL::AppKit::View::SimpleXML
 /], 'OpusVL::AppKit', {});
-eq_or_diff $problems, [], 'OpusVL::AppKit should have no inconsistent permissions';
+eq_or_diff $problems, { 
+    comaint => \@co_maint,
+    module => 'OpusVL::AppKit',
+    owner => 'NEWELLC',
+    problems => [],
+}, 'OpusVL::AppKit should have no inconsistent permissions';
 
 done_testing;
