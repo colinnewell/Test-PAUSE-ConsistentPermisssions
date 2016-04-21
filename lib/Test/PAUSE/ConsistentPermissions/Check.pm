@@ -23,6 +23,17 @@ sub report_problems
 
     my $pp = $self->permissions_client;
     my $master = $pp->module_permissions($authority_from);
+    unless($master)
+    {
+        return {
+            module => $authority_from,
+            owner => 'UNKOWN',
+            comaint => [],
+            problems => [
+                missing => "$authority_from not found in permissions list",
+            ],
+        };
+    }
     my $owner = $master->owner;
     my @comaint = $master->co_maintainers;
 
