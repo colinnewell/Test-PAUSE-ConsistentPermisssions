@@ -5,7 +5,7 @@ Checking your PAUSE permissions are consistent for a module.
 This module provides methods for testing permissions manually
 with a script, and a testing method.
 
-    script/pause-check-distro-perms
+    pause-check-distro-perms Test-DBIx-Class Test::DBIx::Class
 
 For tests,
 
