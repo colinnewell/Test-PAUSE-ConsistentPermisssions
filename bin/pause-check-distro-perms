@@ -1,5 +1,7 @@
 #!perl
 
+# PODNAME: pause-check-distro-perms
+
 use strictures 2;
 use PAUSE::Packages;
 use Test::PAUSE::ConsistentPermissions::Check;
