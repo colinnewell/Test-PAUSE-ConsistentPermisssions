@@ -82,9 +82,36 @@ Test::PAUSE::ConsistentPermissions::Check - Class used to check permissions.
 
 =head1 DESCRIPTION
 
+This class downloads the permissions from CPAN and checks them for consistency.
+
+It returns basic permissions information about the module regardless (assuming
+it was found on CPAN) and a problems array with any problems that were found.
+
+    my $perms_test = Test::PAUSE::ConsistentPermissions::Check->new;
+    my $report = $perms_test->report_problems([qw/
+        OpusVL::AppKit
+        OpusVL::AppKit::Action::AppKitForm
+        OpusVL::AppKit::Builder
+    /], 'OpusVL::AppKit');
+    # report 
+    # {
+    #     module => 'OpusVL::AppKit',
+    #     owner => 'NEwELLC',
+    #     comaint => ['ALTREUS', 'BRADH'],
+    #     problems => [],
+    # }
+
 =head1 METHODS
 
 =head2 report_problems
+
+This expects an array reference of modules to check, and the module to use
+as the authority for the permissions.
+
+    my $report = $perms_test->report_problems($modules, $authority_module);
+
+If the module was not found in the permissions list then the owner is set to 
+UNKOWN and the problems has a hashref with the key 'missing'.
 
 =head1 ATTRIBUTES
 
