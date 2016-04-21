@@ -76,11 +76,11 @@ This needs to be passed the core module name.
 
 =over 
 
-=item * App::PAUSE::CheckPerms
+=item * L<App::PAUSE::CheckPerms>
 
 An application to check if an authors permissions are consistent.
 
-=item * Test::PAUSE::Permissions
+=item * L<Test::PAUSE::Permissions>
 
 This module allows you to ensure that you will be able to upload your module
 succesfully.
