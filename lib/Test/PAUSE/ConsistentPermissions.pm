@@ -64,7 +64,7 @@ Note that this is different to checking that the current author has permission t
 These test will only run if the RELEASE_TESTING environment variable is set, otherwise they will
 skip.
 
-For a script to check modules on CPAN see L<bin/pause-check-distro-perms>.
+For a script to check modules on CPAN see L<pause-check-distro-perms>.
 
 =head1 FUNCTIONS
 

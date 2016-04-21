@@ -14,6 +14,7 @@ my $quiet = 0;
 
 # FIXME: use proper command line parsing.
 # then we can have verbose/quiet etc.
+# need pod.
 
 unless($dist && $module)
 {
