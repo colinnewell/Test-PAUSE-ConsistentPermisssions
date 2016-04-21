@@ -86,9 +86,9 @@ OpusVL::AppKit::View::PDF::Reuse
 OpusVL::AppKit::View::SimpleXML
 /], 'OpusVL::AppKit', {});
 eq_or_diff $problems, { 
-    comaint => \@co_maint,
     module => 'OpusVL::AppKit',
     owner => 'NEWELLC',
+    comaint => \@co_maint,
     problems => [
         {
             module => 'OpusVL::AppKit::Action::AppKitForm',
