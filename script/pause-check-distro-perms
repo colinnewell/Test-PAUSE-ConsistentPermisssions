@@ -7,6 +7,9 @@ use Test::PAUSE::ConsistentPermissions::Check;
 my $dist = shift;
 my $module = shift;
 
+my $verbose = 1;
+my $quiet = 0;
+
 # FIXME: use proper command line parsing.
 # then we can have verbose/quiet etc.
 
@@ -24,8 +27,47 @@ my $pp = PAUSE::Packages->new;
 my $perms_test = Test::PAUSE::ConsistentPermissions::Check->new;
 
 my $release_info = $pp->release($dist);
+unless($release_info)
+{
+    print "Unable to find distro $dist\n";
+    exit(2);
+}
 my @modules = map { $_->name } @{$release_info->modules};
 my $report = $perms_test->report_problems(\@modules, $module);
 
-use Data::Dumper;
-print Dumper($report);
+my $problems = @{$report->{problems}};
+if(!$quiet && ($verbose || $problems))
+{
+    # display module info.
+    print "Distribution: $dist\n";
+    print "Module: " . $report->{module}, "\n";
+    print "Owner: " . $report->{owner}, "\n";
+    print "Comaint: " . join(', ', @{$report->{comaint}}), "\n";
+}
+
+if($problems && !$quiet)
+{
+    print "Problems found:\n";
+    for my $problem (@{$report->{problems}})
+    {
+        print "Module: " . $problem->{module}. "\n";
+        if(exists $problem->{issues}->{different_owner})
+        {
+            print " has a different owner - " . $problem->{issues}->{different_owner} . "\n";
+        }
+        if($problem->{issues}->{missing_authority})
+        {
+            print " unable to find permissions for the module\n";
+        }
+        if($problem->{issues}->{missing})
+        {
+            print " is missing comaintainers - " . join(', ', @{$problem->{issues}->{missing}}) . "\n";
+        }
+        if($problem->{issues}->{extra})
+        {
+            print " has additional comaintainers - " . join(', ', @{$problem->{issues}->{extra}}) . "\n";
+        }
+    }
+}
+
+exit($problems > 0);

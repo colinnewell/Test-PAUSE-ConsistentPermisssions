@@ -30,7 +30,12 @@ sub report_problems
             owner => 'UNKOWN',
             comaint => [],
             problems => [
-                missing => "$authority_from not found in permissions list",
+                {
+                    module => $authority_from,
+                    issues => {
+                        missing_authority => "$authority_from not found in permissions list",
+                    }
+                }
             ],
         };
     }
