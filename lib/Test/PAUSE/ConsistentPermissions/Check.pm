@@ -75,6 +75,49 @@ sub report_problems
     };
 }
 
+# FIXME: do these methods really belong here?
+sub module_info_to_fh
+{
+    my $self = shift;
+    my $report = shift;
+    my $fh = shift;
+    print $fh "Module: " . $report->{module}, "\n";
+    print $fh "Owner: " . $report->{owner}, "\n";
+    print $fh "Comaint: " . join(', ', @{$report->{comaint}}), "\n";
+}
+
+sub problems_to_fh
+{
+    my $self = shift;
+    my $report = shift;
+    my $fh = shift;
+    my $problems = @{$report->{problems}};
+    if($problems)
+    {
+        print $fh "Problems found:\n";
+        for my $problem (@{$report->{problems}})
+        {
+            print $fh "Module: " . $problem->{module}. "\n";
+            if(exists $problem->{issues}->{different_owner})
+            {
+                print $fh " has a different owner - " . $problem->{issues}->{different_owner} . "\n";
+            }
+            if($problem->{issues}->{missing_authority})
+            {
+                print $fh " unable to find permissions for the module\n";
+            }
+            if($problem->{issues}->{missing})
+            {
+                print $fh " is missing comaintainers - " . join(', ', @{$problem->{issues}->{missing}}) . "\n";
+            }
+            if($problem->{issues}->{extra})
+            {
+                print $fh " has additional comaintainers - " . join(', ', @{$problem->{issues}->{extra}}) . "\n";
+            }
+        }
+    }
+}
+
 # achieve: 
 # report incorrect owner.  
 # report missing comaint.

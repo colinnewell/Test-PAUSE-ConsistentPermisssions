@@ -40,34 +40,12 @@ if(!$quiet && ($verbose || $problems))
 {
     # display module info.
     print "Distribution: $dist\n";
-    print "Module: " . $report->{module}, "\n";
-    print "Owner: " . $report->{owner}, "\n";
-    print "Comaint: " . join(', ', @{$report->{comaint}}), "\n";
+    $perms_test->module_info_to_fh($report, \*STDOUT);
 }
 
 if($problems && !$quiet)
 {
-    print "Problems found:\n";
-    for my $problem (@{$report->{problems}})
-    {
-        print "Module: " . $problem->{module}. "\n";
-        if(exists $problem->{issues}->{different_owner})
-        {
-            print " has a different owner - " . $problem->{issues}->{different_owner} . "\n";
-        }
-        if($problem->{issues}->{missing_authority})
-        {
-            print " unable to find permissions for the module\n";
-        }
-        if($problem->{issues}->{missing})
-        {
-            print " is missing comaintainers - " . join(', ', @{$problem->{issues}->{missing}}) . "\n";
-        }
-        if($problem->{issues}->{extra})
-        {
-            print " has additional comaintainers - " . join(', ', @{$problem->{issues}->{extra}}) . "\n";
-        }
-    }
+    $perms_test->problems_to_fh($report, \*STDOUT);
 }
 
 exit($problems > 0);
