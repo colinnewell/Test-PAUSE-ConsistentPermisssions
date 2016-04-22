@@ -2,6 +2,10 @@
 
 Checking your PAUSE permissions are consistent for a module.
 
+This is distinct from checking if you have the permission
+required to release the module successfully.  This is primarirly
+useful for projects with multiple co-maintainers.
+
 This module provides methods for testing permissions manually
 with a script, and a testing method.
 
