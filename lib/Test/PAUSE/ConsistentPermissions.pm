@@ -6,6 +6,8 @@ use parent 'Exporter';
 use Test::More;
 use Parse::LocalDistribution;
 
+our $VERSION = '0.002';
+
 our @EXPORT = (@Test::More::EXPORT, qw/all_permissions_consistent/);
 
 sub all_permissions_consistent
