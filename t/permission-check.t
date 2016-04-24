@@ -18,6 +18,7 @@ push @responses, $mp;
 push @responses, $mp;
 push @responses, $different_comaint;
 push @responses, $different_owner;
+push @responses, undef;
 $mock->mock('module_permissions', sub {
     if(@responses)
     {
@@ -89,6 +90,7 @@ eq_or_diff $problems, {
     module => 'OpusVL::AppKit',
     owner => 'NEWELLC',
     comaint => \@co_maint,
+    inconsistencies => 2,
     problems => [
         {
             module => 'OpusVL::AppKit::Action::AppKitForm',
@@ -105,6 +107,12 @@ eq_or_diff $problems, {
             module => 'OpusVL::AppKit::Builder',
             issues => {
                 different_owner => 'WRONG',
+            },
+        },
+        {
+            module => 'OpusVL::AppKit::Controller::AppKit',
+            issues => {
+                missing_permissions => 'Permissions not found on PAUSE',
             },
         },
     ],

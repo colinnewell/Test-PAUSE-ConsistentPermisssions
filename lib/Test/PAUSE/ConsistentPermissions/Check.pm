@@ -29,6 +29,7 @@ sub report_problems
             module => $authority_from,
             owner => 'UNKOWN',
             comaint => [],
+            inconsistencies => 0,
             problems => [
                 {
                     module => $authority_from,
@@ -41,17 +42,25 @@ sub report_problems
     }
     my $owner = $master->owner;
     my @comaint = $master->co_maintainers;
+    my $inconsistencies = 0;
 
     my @problem_list;
     for my $module (@$modules)
     {
         my $mp = $pp->module_permissions($module);
+        unless($mp)
+        {
+            push @problem_list, { module => $module, issues => { missing_permissions => 'Permissions not found on PAUSE'} };
+            next;
+        }
         my $mod_owner = $mp->owner;
         my @mc = $mp->co_maintainers;
         my $problems = {};
+        my $inconsistent = 0;
         if($mod_owner ne $owner)
         {
             $problems->{different_owner} = $mod_owner;
+            $inconsistent = 1;
         }
         my $lc = List::Compare->new(\@comaint, \@mc);
         unless($lc->is_LequivalentR)
@@ -60,7 +69,9 @@ sub report_problems
             my @extra = $lc->get_complement();
             $problems->{missing} = \@missing if @missing;
             $problems->{extra} = \@extra if @extra;
+            $inconsistent = 1;
         }
+        $inconsistencies += $inconsistent;
         if(%$problems)
         {
             push @problem_list, { module => $module, issues => $problems };
@@ -72,6 +83,7 @@ sub report_problems
         owner => $owner,
         comaint => \@comaint,
         problems => \@problem_list,
+        inconsistencies => $inconsistencies,
     };
 }
 
@@ -103,6 +115,10 @@ sub problems_to_fh
                 print $fh " has a different owner - " . $problem->{issues}->{different_owner} . "\n";
             }
             if($problem->{issues}->{missing_authority})
+            {
+                print $fh " unable to find permissions for the module\n";
+            }
+            if($problem->{issues}->{missing_permissions})
             {
                 print $fh " unable to find permissions for the module\n";
             }
@@ -146,8 +162,14 @@ it was found on CPAN) and a problems array with any problems that were found.
     #     module => 'OpusVL::AppKit',
     #     owner => 'NEwELLC',
     #     comaint => ['ALTREUS', 'BRADH'],
+    #     inconsistencies => 0,
     #     problems => [],
     # }
+
+It reports missing permissions in the problem array, but does not increment
+the inconsistencies counter for that as they probably aren't inconsistent,
+simply not present yet.  This is likely to happen when you are preparing
+to upload a new version.
 
 =head1 METHODS
 

@@ -31,7 +31,15 @@ sub all_permissions_consistent
         open my $ph, '>', \$problems;
         $checker->problems_to_fh($results, $ph);
         close($ph);
-        fail $problems;
+        if($results->{inconsistencies})
+        {
+            fail $problems;
+        }
+        else
+        {
+            note $problems;
+            pass 'All permissions present found were consistent';
+        }
     }
     else
     {
@@ -63,6 +71,13 @@ Note that this is different to checking that the current author has permission t
 
 These test will only run if the RELEASE_TESTING environment variable is set, otherwise they will
 skip.
+
+Note that missing permissions will not cause a test failure, but if you are
+in verbose mode a note will be made.  This is because when you're doing a
+release including new files those permissions will indeed not be found.
+
+The success message will be subtly different when the permissions don't
+exist for some of the modules you are about to upload.
 
 For a script to check modules on CPAN see L<pause-check-distro-perms>.
 
