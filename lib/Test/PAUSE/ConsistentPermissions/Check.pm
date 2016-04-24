@@ -6,7 +6,7 @@ use Moo;
 use PAUSE::Permissions;
 use List::Compare;
 
-our $VERSION = '0.002';
+our $VERSION = '0.003';
 
 has permissions_client => (is => 'ro', lazy => 1, builder => '_build_permissions_client');
 
