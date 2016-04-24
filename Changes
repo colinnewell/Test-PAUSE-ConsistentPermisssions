@@ -2,6 +2,9 @@ Revision history for Test-PAUSE-ConsistentPermissions
 
 {{ $NEXT }}
 
+0.002     2016-04-24 09:08:30+01:00 Europe/London
+  - Performed the usual dist fix after release.
+
 0.001     2016-04-24 08:59:52+01:00 Europe/London
 
   - Initial version.
