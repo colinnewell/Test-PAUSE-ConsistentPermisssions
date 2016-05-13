@@ -2,6 +2,8 @@ Revision history for Test-PAUSE-ConsistentPermissions
 
 {{ $NEXT }}
 
+0.003     2016-05-13 13:38:04+01:00 Europe/London
+
   - Allow dist to not be speicied when using 
     pause-check-distro-perms
   - Updated usage on the script to make use of
