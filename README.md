@@ -9,7 +9,7 @@ useful for projects with multiple co-maintainers.
 This module provides methods for testing permissions manually
 with a script, and a testing method.
 
-    pause-check-distro-perms Test-DBIx-Class Test::DBIx::Class
+    pause-check-distro-perms Test::DBIx::Class
 
 For tests,
 

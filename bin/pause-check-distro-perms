@@ -5,25 +5,38 @@
 use strictures 2;
 use PAUSE::Packages;
 use Test::PAUSE::ConsistentPermissions::Check;
+use Pod::Usage;
+
 
 my $dist = shift;
 my $module = shift;
+
+unless($module)
+{
+    if($dist)
+    {
+        if($dist =~ /::/)
+        {
+            $module = $dist;
+            $dist =~ s/::/-/g;
+        }
+        else
+        {
+            $module = $dist;
+            $module =~ s/[-+]+/::/g;
+        }
+    }
+}
 
 my $verbose = 1;
 my $quiet = 0;
 
 # FIXME: use proper command line parsing.
 # then we can have verbose/quiet etc.
-# need pod.
 
 unless($dist && $module)
 {
-    print STDERR "Usage $0 dist-name module::name\n";
-    print STDERR "\n";
-    print STDERR "This checks the permissions are consistent for dist-name\n";
-    print STDERR "Using module::name as the module with the correct set of permissions\n";
-    print STDERR "Note this downloads a couple of large files from cpan so it may be slow.\n";
-    exit(1);
+    pod2usage(-verbose => 0, existval => 2);
 }
 
 my $pp = PAUSE::Packages->new;
@@ -52,3 +65,14 @@ if($problems && !$quiet)
 }
 
 exit($problems > 0);
+
+=head1 SYNOPSIS
+
+    pause-check-distro-perms Module
+    pause-check-distro-perms Dist-Name [Module]
+
+This script will check that the permissions are consistent for a distribution.
+If only a module name is specified it is assumed that a distribution exists
+with the same name (but - instead of ::).
+
+Note this downloads a couple of large files from cpan so it may be slow.
