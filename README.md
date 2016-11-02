@@ -25,8 +25,7 @@ done_testing;
 
 ## Installation
 
-Note, not currently on CPAN.  This will be how you install it once
-it is.
+To install it with cpanm,
 
     cpanm Test::PAUSE::ConsistentPermissions
 
