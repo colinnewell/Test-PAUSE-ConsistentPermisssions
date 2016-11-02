@@ -142,9 +142,7 @@ sub problems_to_fh
 
 1;
 
-=head1 NAME
-
-Test::PAUSE::ConsistentPermissions::Check - Class used to check permissions.
+# ABSTRACT: Class used to check permissions.
 
 =head1 DESCRIPTION
 

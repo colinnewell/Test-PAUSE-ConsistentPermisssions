@@ -49,9 +49,7 @@ sub all_permissions_consistent
     }
 }
 
-=head1 NAME
-
-Test::PAUSE::ConsistentPermissions - Check your PAUSE permissions are consistent in your distribution.
+# ABSTRACT: Check your PAUSE permissions are consistent in your distribution.
 
 =head1 DESCRIPTION
 
